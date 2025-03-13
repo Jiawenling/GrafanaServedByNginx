@@ -1,0 +1,26 @@
+version: '3.9'
+
+networks:
+  mozart-vlan-app-bridge:
+    external: true
+
+volumes:
+  grafana_data:
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana1
+    hostname: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      #- "i./grafana.ini:/etc/grafana/grafana.ini"
+    restart: unless-stopped
+    networks:
+      mozart-vlan-app-bridge:
+    environment:
+      #GF_SERVER_DOMAIN: localhost
+      GF_SERVER_ROOT_URL: http://localhost/grafana
+      GF_SERVER_SERVE_FROM_SUB_PATH: false
